@@ -38,7 +38,7 @@ function Home() {
       </div>
       <div className='flex text-center gap-8 place-content-center text-stone-600'>
         <p>Diagnose the vehicle throughly<br/> to narrow down the problem</p>
-        <p>Fix the problem with right solution <br/>for spot mobilisation</p>
+        <p>Fix the problem with right<br/> solution for spot mobilisation</p>
         <p>Recheck the vehicle for any <br/>other warning & issues</p>
         <p>Provide maintenance tips &<br/> recommendations</p>
         <p>We accept payment through<br/> online, payTM, UPI etc</p>
@@ -74,8 +74,6 @@ function Home() {
         
       </div>  
     </section>
-
-    
     </section>
     </div>
   )

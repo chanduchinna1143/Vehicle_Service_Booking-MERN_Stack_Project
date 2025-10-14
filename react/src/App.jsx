@@ -5,6 +5,7 @@ import './App.css'
 import Naviga from './components/Naviga'
 import Home from './pages/Home'
 import { BrowserRouter ,Route , Routes} from 'react-router'
+import Services from './pages/Services'
 
 function App() {
   return (
@@ -13,9 +14,9 @@ function App() {
       <Naviga />
       <Routes>
       <Route path='/' element={<Home />}></Route>
+      <Route path='/Services' element={<Services />}></Route>
       {/* <Route path='/About' element={<About/>}></Route>
-      <Route path='/Services' element={<Contact />}></Route>
-      <Route path='/Login' element={<Login />}></Route> */}
+        <Route path='/Login' element={<Login />}></Route> */}
       </Routes> 
       
       
