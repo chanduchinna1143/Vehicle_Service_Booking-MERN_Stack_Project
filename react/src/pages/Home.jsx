@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 function Home() {
   return (
@@ -14,7 +15,7 @@ function Home() {
             <p>Call Us : 9966655384</p>
         </section>
         <section>
-            <button className='bg-black text-white text-xl px-8 py-3 rounded-4xl'>Book Service</button>
+            <Link to='/login'> <button type='submit' className='bg-black text-white text-xl px-8 py-3 rounded-4xl'>Book Service</button></Link>
         </section>
     </div>
     <div>

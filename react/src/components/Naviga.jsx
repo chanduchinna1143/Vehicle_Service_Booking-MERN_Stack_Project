@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Link} from 'react-router'
+import {Link} from 'react-router-dom'
 
 function Naviga() {
   return (
@@ -13,7 +13,7 @@ function Naviga() {
         <Link to="/">Home</Link>
         <Link to="/About">About</Link>
         <Link to="/services">Services</Link>
-        <Link to="/Login" className='bg-amber-300 text-black text-semibold rounded-xl py-2 px-4 text-lg'>Login</Link>
+        <Link to="/login" className='bg-amber-300 text-black text-semibold rounded-xl py-2 px-4 text-lg'>Login</Link>
       </nav>
     </div>
   );
