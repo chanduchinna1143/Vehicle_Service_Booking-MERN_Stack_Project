@@ -62,7 +62,7 @@ const BookingForm = () => {
           notes: "",
         });
         setTimeout(() => {setSuccess(false);
-          navigate("/toadmin");
+          navigate("/");
         }, 3000);
       } else {
         setError(result.message || "Something went wrong");

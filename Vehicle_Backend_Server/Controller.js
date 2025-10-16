@@ -17,23 +17,26 @@ exports.newuser=async (req,res) => {
      } 
 }
 
-exports.login=async (req,res) => {
-   const {email,password} = req.body;
-   if(!email || !password){
-      return res.status(403).json({error:"Fill all feilds"})
-   }
-   const exist = await signupDetails.findOne({email});
-   if(exist){
-     if(exist.password == password){
-       return res.status(200).json({ message: "Login successful"})
-   }else{
-        return res.status(404).json({message:"password incorrect"})
-   }}else{
-      return res.status(404).json({message:"user not found"})
-   }
-   
-     
-}
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(403).json({ error: "Fill all fields" });
+  }
+
+  const exist = await signupDetails.findOne({ email });
+  if (!exist) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  if (exist.password !== password) {
+    return res.status(401).json({ message: "Password incorrect" });
+  }
+  const isAdmin = email === "admin@gmail.com" && password === "admin";
+  return res.status(200).json({
+    message: "Login successful",
+    role: isAdmin ? "admin" : "user"
+  });
+};
 
 exports.createBooking = async (req, res) => {
   try {
@@ -94,12 +97,3 @@ exports.bookingtoadmin=async (req,res) => {
    return res.json(appointment);  
 }
 
-exports.adminlogin=async(req,res)=>{
-  const {email,password}=req.body;
-  if (email === 'admin@gmail.com' && password === 'admin123') {
-    return res.status(200).json({ success: true, message: 'Login successful' });
-  } else {
-    return res.status(401).json({ success: false, message: 'Invalid credentials' });
-  }
-
-}

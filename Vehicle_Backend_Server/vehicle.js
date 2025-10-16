@@ -18,5 +18,6 @@ app.post('/createbooking',createBooking)
 app.get('/bookingtoadmin',bookingtoadmin)
 
 
+
 app.listen(3000,()=>{console.log("server running on http://localhost:3000")})
  

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 
-function LoginPage(){
+function LoginPage({ setLoggedIn }) {
    const [data, setData] = useState({ email: "", password: "" });
    const navigate = useNavigate();
 
@@ -20,8 +20,14 @@ function LoginPage(){
       const result = await response.json();
       if (response.ok) {
         alert("Login successful!");
-        navigate("/booking");
-      } else {
+        setLoggedIn(true);
+        if (result.role === "admin") {
+          navigate("/toadmin");
+        } else {
+          navigate("/booking");
+        }
+      }
+       else {
         alert(result.message || "Login failed");
       }
     } catch (err) {
