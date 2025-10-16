@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage'
 import SignUp from './pages/SignUp'
 import BookingForm from './pages/Booking'
 import Footer from './components/Foot'
+import AdminDashboard from './pages/AdminDashboard'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path='/login' element = {<LoginPage/>}/>
       <Route path="/SignUp" element = {<SignUp/>}/>
       <Route path='/booking' element = {<BookingForm/>}/>
+      <Route path='/toadmin' element={<AdminDashboard/>}/>
       </Routes>
       <Footer/> 
       

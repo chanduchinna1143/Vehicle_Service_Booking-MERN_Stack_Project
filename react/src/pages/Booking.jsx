@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 
+import { useNavigate } from 'react-router-dom';
+
+
 const BookingForm = () => {
+  
   const [formData, setFormData] = useState({
     name: "",
     number: "",
@@ -11,22 +15,64 @@ const BookingForm = () => {
     date: "",
     notes: "",
   });
+  const navigate = useNavigate();
 
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
-  
   const today = new Date().toISOString().split("T")[0];
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Booking Submitted:", formData);
-    setSuccess(true);
-    setTimeout(() => setSuccess(false), 3000);
+    setError("");
+    setSuccess(false);
+
+    try {
+      const response = await fetch("http://localhost:3000/createbooking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          FullName: formData.name,
+          MobileNumber: formData.number,
+          CarModel: formData.carModel,
+          EngineType: formData.engineType,
+          ServiceType: formData.serviceType,
+          VehicleNumber: formData.vehicleNumber,
+          AppointmentDate: formData.date,
+          AdditionalRequirements: formData.notes,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSuccess(true);
+        setFormData({
+          name: "",
+          number: "",
+          carModel: "",
+          engineType: "",
+          serviceType: "",
+          vehicleNumber: "",
+          date: "",
+          notes: "",
+        });
+        setTimeout(() => {setSuccess(false);
+          navigate("/toadmin");
+        }, 3000);
+      } else {
+        setError(result.message || "Something went wrong");
+      }
+    } catch (err) {
+      console.error("Error submitting booking:", err);
+      setError("Failed to connect to server");
+    }
   };
+
 
   
   
