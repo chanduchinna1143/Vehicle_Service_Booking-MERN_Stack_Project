@@ -11,7 +11,7 @@ function Naviga({ loggedIn, handleLogout }) {
       </div>
       <nav className='space-x-10 text-2xl text-gray-300'>
         <Link to="/">Home</Link>
-        <Link to="/About">About</Link>
+        <Link to="/zero">About</Link>
         <Link to="/services">Services</Link>
         {loggedIn ? (
           <Link to="/" onClick={handleLogout} className="bg-red-500 text-white font-semibold rounded-xl py-2 px-4 text-lg">

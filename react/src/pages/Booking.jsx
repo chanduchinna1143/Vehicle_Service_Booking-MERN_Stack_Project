@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-
 import { useNavigate } from 'react-router-dom';
 
-
 const BookingForm = () => {
-  
   const [formData, setFormData] = useState({
     name: "",
     number: "",
@@ -15,7 +12,9 @@ const BookingForm = () => {
     date: "",
     notes: "",
   });
+
   const navigate = useNavigate();
+  const userEmail = localStorage.getItem("userEmail");
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -37,6 +36,7 @@ const BookingForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           FullName: formData.name,
+          email: userEmail,
           MobileNumber: formData.number,
           CarModel: formData.carModel,
           EngineType: formData.engineType,
@@ -61,8 +61,9 @@ const BookingForm = () => {
           date: "",
           notes: "",
         });
-        setTimeout(() => {setSuccess(false);
-          navigate("/");
+        setTimeout(() => {
+          setSuccess(false);
+          navigate('/userstatus');
         }, 3000);
       } else {
         setError(result.message || "Something went wrong");
@@ -73,9 +74,6 @@ const BookingForm = () => {
     }
   };
 
-
-  
-  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-indigo-100 to-blue-200 px-4 relative overflow-hidden">
@@ -189,11 +187,22 @@ const BookingForm = () => {
             className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           >
             <option value="">Select Service</option>
-            <option>Maintenance</option>
+            <option>General Service</option>
+            <option>Engine Repair</option>
+            <option>Battery Jumpstart</option>
+            <option>Flat Tyre Repair</option>
+            <option>Towing Service</option>
+            <option>Brake Service</option>
+            <option>AC Repair</option>
+            <option>Suspension Repair</option>
             <option>Oil Change</option>
-            <option>Repair</option>
-            <option>Cleaning</option>
-            <option>Inspection</option>
+            <option>Indicators & Lights Repair</option>
+            <option>Windsheild Wiper Replacement</option>
+            <option>Wheel Alignment</option>
+            <option>Coolant Top-Up</option>
+            <option>Clutch & Gearbox</option>
+            <option>Interior Cleaning</option>
+            <option>Exterior Wash & Polish</option>
           </select>
         </div>
 

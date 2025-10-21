@@ -3,7 +3,7 @@ const app=e();
 const cors=require("cors")
 const mongoose = require("mongoose");
 require("dotenv").config();
-const { newuser, login, createBooking, bookingtoadmin } = require("./Controller");
+const { newuser, login, createBooking, bookingtoadmin , getUserBookingStatus, updateBookingStatus} = require("./Controller");
 
 app.use(e.json());
 app.use(cors());
@@ -16,6 +16,10 @@ app.post('/newuser',newuser)
 app.post('/login',login)
 app.post('/createbooking',createBooking)
 app.get('/bookingtoadmin',bookingtoadmin)
+
+app.patch("/bookings/:id/status",updateBookingStatus);
+app.get("/userstatus", getUserBookingStatus);
+
 
 
 

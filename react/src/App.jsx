@@ -8,6 +8,8 @@ import SignUp from './pages/SignUp';
 import BookingForm from './pages/Booking';
 import Footer from './components/Foot';
 import AdminDashboard from './pages/AdminDashboard';
+import Zero from './pages/About';
+import UserStatusPage from './pages/UserStatus';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -27,6 +29,8 @@ function App() {
           <Route path='/SignUp' element={<SignUp />} />
           <Route path='/booking' element={<BookingForm />} />
           <Route path='/toadmin' element={<AdminDashboard />} />
+          <Route path='/zero' element={<Zero/>}/>
+          <Route path='/userstatus' element={<UserStatusPage/>}/>
         </Routes>
         <Footer />
       </BrowserRouter>
