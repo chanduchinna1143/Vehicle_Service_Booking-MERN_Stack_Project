@@ -116,8 +116,8 @@ exports.updateBookingStatus = async (req, res) => {
   try {
     const updatedBooking = await BookingSchema.findByIdAndUpdate(
       id,
-      { Status: status },
-      { new: true }
+      {Status: status},
+      {new: true}
     );
 
     if (!updatedBooking) {
@@ -133,7 +133,7 @@ exports.updateBookingStatus = async (req, res) => {
 
 
 exports.getUserBookingStatus = async (req, res) => {
-  const { email } = req.query;
+  const {email} = req.query;
   try {
     const bookings = await BookingSchema.find({ email });
     res.status(200).json(bookings || []);
