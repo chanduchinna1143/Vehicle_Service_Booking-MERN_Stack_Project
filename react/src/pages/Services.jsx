@@ -86,6 +86,7 @@ const sec = [
 ];
 
 function Services() {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   return (
     <div className='px-8 py-4 space-y-8' >
       <section>
@@ -97,7 +98,7 @@ function Services() {
              <img src={item.image} alt="click" className='rounded-4xl h-50'/>
             <h3 className='font-bold text-2xl text-center'>{item.title}</h3>
             <p className='text-center'>-&gt;{item.description}</p>
-           <Link to='/login'><button className='bg-amber-300 text-black px-4 py-2 rounded hover:bg-amber-400  '>Book Now</button></Link>
+           <Link to={isLoggedIn ? '/login' : '/userstatus'}><button className='bg-amber-300 text-black px-4 py-2 rounded hover:bg-amber-400  '>Book Now</button></Link>
           </div>
         ))}
       </section>
