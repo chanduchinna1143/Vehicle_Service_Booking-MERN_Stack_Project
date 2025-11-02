@@ -1,45 +1,69 @@
 const signupDetails =require('./signModel')
 const BookingSchema = require('./AppModel')
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const {verifyToken} = require('./middlewear');
 
-exports.newuser=async (req,res) => {
-     const {name,email,password}=req.body;
-     if(!name || !email || !password){
-         return res.status(403).json({error:"Fill all fields"})
-     }
 
-     const exist = await signupDetails.findOne({email});
-     if(exist){
-        return res.status(403).json({error:"Email is in use"})
-     }else{
-        const newuser=new signupDetails({name,email,password});
-        await newuser.save();
-        return res.status(201).json({
-          message: "User created successfully",
-          userId: newuser._id,
-          email: newuser.email
-     } )
-}}
+
+exports.newuser = async (req, res) => {
+  try {
+    const { name, email, password, confirmpassword } = req.body;
+    if (!name || !email || !password || !confirmpassword) {
+      return res.status(403).json({ error: "Fill all fields" });
+    }
+    if (password !== confirmpassword) {
+      return res.status(400).json({ error: "Passwords do not match" });
+    }
+    const exist = await signupDetails.findOne({ email });
+    if (exist) {
+      return res.status(403).json({ error: "Email is already in use" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newuser = new signupDetails({name,email,password:hashedPassword,confirmpassword:hashedPassword});
+    await newuser.save();
+    return res.status(201).json({
+      message: "User created successfully",
+      userId: newuser._id,
+      email: newuser.email,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(403).json({ error: "Fill all fields" });
-  }
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(403).json({ message: "Fill all fields" });
+    }
 
-  const exist = await signupDetails.findOne({ email });
-  if (!exist) {
-    return res.status(404).json({ message: "User not found" });
-  }
+    const user = await signupDetails.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-  if (exist.password !== password) {
-    return res.status(401).json({ message: "Password incorrect" });
+    const PasswordMatch = await bcrypt.compare(password, user.password);
+    if (!PasswordMatch) {
+      return res.status(401).json({ message: "Password incorrect" });
+    }
+    const token = jwt.sign({ email: user.email, role: user.role }, "mysecretkey", { expiresIn: "1h"});
+    const isAdmin = email === "admin@gmail.com";
+    res.status(200).json({
+      message: "Login successful",
+      role: isAdmin ? "admin" : "user",
+      token, 
+      email: user.email, 
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
-  const isAdmin = email === "admin@gmail.com" && password === "admin";
-  return res.status(200).json({
-    message: "Login successful",
-    role: isAdmin ? "admin" : "user"
-  });
 };
+
 
 exports.createBooking = async (req, res) => {
   try {
@@ -133,8 +157,11 @@ exports.updateBookingStatus = async (req, res) => {
 
 
 exports.getUserBookingStatus = async (req, res) => {
-  const {email} = req.query;
   try {
+    const email = req.user.email;
+    if (!email) {
+      return res.status(400).json({ message: "User email not found in token" });
+    }
     const bookings = await BookingSchema.find({ email });
     res.status(200).json(bookings || []);
   } catch (err) {
@@ -142,6 +169,7 @@ exports.getUserBookingStatus = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 
 

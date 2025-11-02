@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link,useNavigate } from "react-router-dom"; 
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginPage({ setLoggedIn }) {
   const [data, setData] = useState({ email: "", password: "" });
@@ -19,38 +20,45 @@ function LoginPage({ setLoggedIn }) {
       });
       const result = await response.json();
       if (response.ok) {
-        alert("Login successful!");
-        setLoggedIn(true);
-        localStorage.setItem("userEmail", data.email);
+        toast.success("Login successful!");
+        localStorage.setItem("userEmail", result.email);
         localStorage.setItem("userRole", result.role);
+        localStorage.setItem("token", result.token);
+        setLoggedIn(true);
+
         if (result.role === "admin") {
           navigate("/toadmin");
         } else {
-            const statusRes = await fetch(`http://localhost:3000/userstatus?email=${data.email}`);
-            const bookings = await statusRes.json();
-            console.log("Booking check:", bookings);
-            if (statusRes.ok &&Array.isArray(bookings) && bookings !== null && bookings.length > 0) {
+          const statusRes = await fetch("http://localhost:3000/userstatus", {
+            headers: {
+              Authorization: `Bearer ${result.token}`,
+            },
+          });
+          const bookings = await statusRes.json();
+
+            if (Array.isArray(bookings) && bookings.length > 0) {
               navigate("/userstatus");
             } else {
               navigate("/booking");
             }
         }
       } else {
-        alert(result.message || "Login failed");
+        toast.error(result.message || "Invalid email or password");
       }
     } catch (err) {
       console.error("Login error:", err);
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-157 bg-gray-100">
       <div className="w-2/3 relative">
         <img
           src="/project_car.webp"
           alt="Car Service"
-         className="w-full h-full object-cover" />
-
+          className="w-full h-full object-cover"
+        />
         <div className="absolute top-10 left-10 text-white">
           <h1 className="text-4xl font-bold">Car Maintenance Portal</h1>
           <p className="mt-2 text-lg text-gray-200">
@@ -98,7 +106,9 @@ function LoginPage({ setLoggedIn }) {
 
           <p className="text-center text-gray-600 mt-4">
             Don’t have an account?{" "}
-            <Link to="/SignUp" className="text-blue-600 hover:underline"> Sign up</Link>
+            <Link to="/SignUp" className="text-blue-600 hover:underline">
+              Sign up
+            </Link>
           </p>
         </form>
       </div>

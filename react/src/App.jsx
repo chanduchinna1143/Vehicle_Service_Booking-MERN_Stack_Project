@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import Naviga from './components/Naviga';
 import Home from './pages/Home';
@@ -10,9 +10,19 @@ import Footer from './components/Foot';
 import AdminDashboard from './pages/AdminDashboard';
 import Zero from './pages/About';
 import UserStatusPage from './pages/UserStatus';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(() => {
+  return !!localStorage.getItem("token");
+});
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  setLoggedIn(!!token);
+}, []);
+
 
   const handleLogout = () => {
     setLoggedIn(false);
@@ -24,7 +34,7 @@ function App() {
         <Naviga loggedIn={loggedIn} handleLogout={handleLogout} />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/Services' element={<Services />} />
+          <Route path='/Services' element={<Services loggedIn={loggedIn} />} />
           <Route path='/login' element={<LoginPage setLoggedIn={setLoggedIn} />} />
           <Route path='/SignUp' element={<SignUp />} />
           <Route path='/booking' element={<BookingForm />} />
@@ -33,6 +43,7 @@ function App() {
           <Route path='/userstatus' element={<UserStatusPage/>}/>
         </Routes>
         <Footer />
+         <ToastContainer position="top-right" autoClose={2000} theme="colored" />
       </BrowserRouter>
     </div>
   );

@@ -4,8 +4,8 @@ import { Link } from 'react-router'
 function Home() {
   return (
     <div>
-    <div className='flex justify-between items-center py-20 px-40'>
-    <div  className='space-y-16'>
+    <div className='flex justify-between items-center py-10 px-30'>
+    <div  className='space-y-18'>
         <section className='space-y-6 font-bold text-7xl'>
             <h1>24/7 Car</h1>
             <h1>Mechanic Repair</h1>
@@ -15,7 +15,8 @@ function Home() {
             <p>Call Us : 9966655384</p>
         </section>
         <section>
-            <Link to='/login'> <button type='submit' className='bg-black text-white text-xl px-8 py-3 rounded-4xl'>Book Service</button></Link>
+            <Link to='/login'>
+          <button type='submit' className='bg-black text-white text-xl px-8 py-3 rounded-4xl'>Book Service</button></Link>
         </section>
     </div>
     <div>

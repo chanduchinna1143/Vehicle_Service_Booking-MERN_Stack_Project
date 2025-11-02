@@ -3,13 +3,19 @@ import React, { useEffect, useState } from "react";
 const UserStatusPage = () => {
   const [bookings, setBookings] = useState([]);
   const [error, setError] = useState("");
-
-  const userEmail = localStorage.getItem("userEmail");
-
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/userstatus?email=${encodeURIComponent(userEmail)}`)
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setError("No token found. Please log in again.");
+          return;
+        }
+        const response = await fetch("http://localhost:3000/userstatus", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const result = await response.json();
 
         if (response.ok) {
@@ -18,20 +24,15 @@ const UserStatusPage = () => {
           setError(result.message || "Failed to fetch bookings");
         }
       } catch (err) {
-        setError("Server error");
+        setError("Server error. Please try again later.");
       }
     };
 
-    if (userEmail) {
-      fetchStatus();
-    } else {
-      setError("No user email found. Please log in.");
-    }
-  }, [userEmail]);
+    fetchStatus();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-indigo-100 to-blue-200 px-6 py-12 relative overflow-hidden">
-
       <div className="absolute w-80 h-80 bg-blue-300 opacity-20 rounded-full blur-3xl top-10 left-10 animate-pulse"></div>
       <div className="absolute w-[28rem] h-[28rem] bg-indigo-300 opacity-20 rounded-full blur-3xl bottom-10 right-10 animate-pulse"></div>
 
@@ -48,7 +49,7 @@ const UserStatusPage = () => {
 
         {bookings.length === 0 && !error ? (
           <p className="text-center text-gray-700 text-xl">
-            No bookings found for <span className="font-bold">{userEmail}</span>
+            No bookings found.
           </p>
         ) : (
           <div className="space-y-8">
@@ -57,6 +58,7 @@ const UserStatusPage = () => {
                 key={booking._id}
                 className="space-y-4 bg-white p-8 rounded-3xl shadow-2xl border border-gray-300 hover:shadow-blue-300 transition-shadow text-lg"
               >
+                <p><strong>Full Name:</strong> {booking.FullName}</p>
                 <p><strong>Vehicle Number:</strong> {booking.VehicleNumber}</p>
                 <p><strong>Car Model:</strong> {booking.CarModel}</p>
                 <p><strong>Service:</strong> {booking.ServiceType}</p>

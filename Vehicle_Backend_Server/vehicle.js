@@ -4,6 +4,7 @@ const cors=require("cors")
 const mongoose = require("mongoose");
 require("dotenv").config();
 const { newuser, login, createBooking, bookingtoadmin , getUserBookingStatus, updateBookingStatus} = require("./Controller");
+const { verifyToken } = require("./middlewear");
 
 app.use(e.json());
 app.use(cors());
@@ -14,11 +15,11 @@ mongoose.connect(process.env.MONGO_URL)
 
 app.post('/newuser',newuser)
 app.post('/login',login)
-app.post('/createbooking',createBooking)
-app.get('/bookingtoadmin',bookingtoadmin)
+app.post('/createbooking',verifyToken,createBooking)
+app.get('/bookingtoadmin',verifyToken,bookingtoadmin)
 
 app.patch("/bookings/:id/status",updateBookingStatus);
-app.get("/userstatus", getUserBookingStatus);
+app.get("/userstatus", verifyToken,getUserBookingStatus);
 
 
 
