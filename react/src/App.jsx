@@ -33,7 +33,7 @@ useEffect(() => {
       <BrowserRouter>
         <Naviga loggedIn={loggedIn} handleLogout={handleLogout} />
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home loggedIn={loggedIn} />} />
           <Route path='/Services' element={<Services loggedIn={loggedIn} />} />
           <Route path='/login' element={<LoginPage setLoggedIn={setLoggedIn} />} />
           <Route path='/SignUp' element={<SignUp />} />

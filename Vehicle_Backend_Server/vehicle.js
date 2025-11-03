@@ -3,7 +3,7 @@ const app=e();
 const cors=require("cors")
 const mongoose = require("mongoose");
 require("dotenv").config();
-const { newuser, login, createBooking, bookingtoadmin , getUserBookingStatus, updateBookingStatus} = require("./Controller");
+const { newuser, login, createBooking, bookingtoadmin , getUserBookingStatus, updateBookingStatus,assignMechanic, markBookingDone,getMechanicBookings} = require("./Controller");
 const { verifyToken } = require("./middlewear");
 
 app.use(e.json());
@@ -19,9 +19,7 @@ app.post('/createbooking',verifyToken,createBooking)
 app.get('/bookingtoadmin',verifyToken,bookingtoadmin)
 
 app.patch("/bookings/:id/status",updateBookingStatus);
-app.get("/userstatus", verifyToken,getUserBookingStatus);
-
-
+app.get("/userstatus",verifyToken,getUserBookingStatus);
 
 
 app.listen(3000,()=>{console.log("server running on http://localhost:3000")})

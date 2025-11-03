@@ -12,9 +12,10 @@ const BookingSchema = new mongoose.Schema({
   AdditionalRequirements: { type: String, default: "" },
   Status: {
     type: String,
-    enum: ['pending', 'accepted', 'declined'],
-    default: 'pending',
+    enum: ["pending", "accepted", "in-progress", "completed", "declined"],
+    default: "pending",
   },
+  AssignedMechanic: { type: String, default: "" },
 });
 
 module.exports = mongoose.model("BookingDetail", BookingSchema);

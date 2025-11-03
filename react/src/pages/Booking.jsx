@@ -1,24 +1,25 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const BookingForm = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const userEmail = localStorage.getItem("userEmail");
+  const today = new Date().toISOString().split("T")[0];
+
+  const [error, setError] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     number: "",
     carModel: "",
     engineType: "",
-    serviceType: "",
+    serviceType: location.state?.selectedService || "", 
     vehicleNumber: "",
     date: "",
     notes: "",
   });
-
-  const navigate = useNavigate();
-  const userEmail = localStorage.getItem("userEmail");
-
-  const [error, setError] = useState("");
-  const today = new Date().toISOString().split("T")[0];
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -101,6 +102,7 @@ const BookingForm = () => {
           </p>
         </div>
 
+    
         <div className="flex flex-col">
           <label className="font-semibold text-gray-700 mb-1">Full Name</label>
           <input

@@ -19,22 +19,13 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 
-/*
-  Improvements in this version:
-  - Prevent overlapping by using responsive grid/flex and constrained heights for Swiper slides
-  - Reintroduced Swiper in “Intro / Mission-Vision / What We Provide / Customer Benefits” areas
-  - Better image sizing and object-fit to avoid layout jumping
-  - Clear spacing so each card has its own visual block (no collisions)
-  - No framer-motion to avoid extra dependency issues
-*/
 
 const slideCardClass =
   "rounded-2xl shadow-lg p-8 h-full flex flex-col justify-start space-y-4 bg-white";
 
-const Zero = () => {
+const Zero = ({loggedIn}) => {
   return (
     <div className="bg-gradient-to-b from-white to-yellow-50 text-stone-800 py-16">
-      {/* HEADER */}
       <div className="text-center mb-12 px-4">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
           About{" "}
@@ -48,7 +39,6 @@ const Zero = () => {
           technicians with a seamless digital experience.
         </p>
       </div>
-      {/* INTRO (SWIPER) */}
       <section className="max-w-6xl mx-auto px-4 md:px-6 mb-12">
         <Swiper
           modules={[Pagination, Autoplay]}
@@ -58,7 +48,7 @@ const Zero = () => {
           loop
           spaceBetween={24}
           slidesPerView={1}
-        //   style={{ minHeight: "350px" }}
+
         >
           <SwiperSlide>
             <div className="flex flex-col md:flex-row gap-8 justify-between items-center min-h-[300px]">
@@ -114,7 +104,6 @@ const Zero = () => {
           </SwiperSlide>
         </Swiper>
       </section>
-      {/* MISSION & VISION (SIDE-BY-SIDE on wide screens, stacked on mobile) */}
       <section className="max-w-6xl mx-auto px-6 mb-12 grid md:grid-cols-2 gap-8">
         <div className={slideCardClass + " bg-yellow-100"}>
           <div className="flex items-center">
@@ -144,7 +133,6 @@ const Zero = () => {
           </p>
         </div>
       </section>
-      {/* HOW IT WORKS (plain responsive card) */}
       <section className="max-w-6xl mx-auto px-6 mb-12">
         <div className="rounded-2xl shadow-lg p-8 bg-white">
           <div className="flex items-center mb-4">
@@ -167,7 +155,6 @@ const Zero = () => {
           </div>
         </div>
       </section>
-      {/* WHAT WE PROVIDE (SWIPER with constrained slide height to avoid overlap) */}
       <section className="max-w-6xl mx-auto px-6 mb-12">
         <h3 className="text-2xl font-semibold mb-6 text-center">
           What We Provide
@@ -239,7 +226,6 @@ const Zero = () => {
           ))}
         </Swiper>
       </section>
-      {/* WHY CHOOSE US */}
       <section className="max-w-6xl mx-auto px-6 mb-12">
         <div className="rounded-2xl shadow-lg p-8 bg-white">
           <div className="flex items-center mb-4">
@@ -268,7 +254,7 @@ const Zero = () => {
           </div>
         </div>
       </section>
-      {/* CUSTOMER BENEFITS (SWIPER horizontal cards for smaller screens) */}
+
       <section className="max-w-6xl mx-auto px-6 mb-12">
         <h3 className="text-2xl font-semibold mb-6 text-center">
           Customer Benefits
@@ -309,7 +295,7 @@ const Zero = () => {
           ))}
         </Swiper>
       </section>
-      {/* CTA */}
+
       <div className="text-center mt-8 px-6">
         <h3 className="text-2xl md:text-3xl font-semibold mb-4">
           Ready to Experience Effortless Honda Servicing?
@@ -322,7 +308,7 @@ const Zero = () => {
           Book Your Service Now
         </a>
       </div>
-      <div className="h-12" /> {/* bottom spacing */}
+      <div className="h-12" />
     </div>
   );
 };

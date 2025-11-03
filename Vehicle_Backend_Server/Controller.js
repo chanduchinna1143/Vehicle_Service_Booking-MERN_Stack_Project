@@ -130,19 +130,19 @@ exports.bookingtoadmin=async (req,res) => {
 }
 
 exports.updateBookingStatus = async (req, res) => {
-  const {id} = req.params;
-  const {status} = req.body; 
+  const { id } = req.params;
+  const { status, mechanic } = req.body;
 
-  if (!['accepted', 'declined'].includes(status)) {
+  const validStatuses = ["accepted", "in-progress", "completed", "declined"];
+  if (!validStatuses.includes(status)) {
     return res.status(400).json({ message: "Invalid status value" });
   }
 
   try {
-    const updatedBooking = await BookingSchema.findByIdAndUpdate(
-      id,
-      {Status: status},
-      {new: true}
-    );
+    const update = { Status: status };
+    if (mechanic) update.AssignedMechanic = mechanic;
+
+    const updatedBooking = await BookingSchema.findByIdAndUpdate(id, update, { new: true });
 
     if (!updatedBooking) {
       return res.status(404).json({ message: "Booking not found" });
@@ -169,6 +169,13 @@ exports.getUserBookingStatus = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+
+
+
+
+
 
 
 

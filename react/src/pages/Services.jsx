@@ -84,18 +84,18 @@ const sec = [
     description: "Full body wash with polish for shine and protection",
   }
 ];
+
 function Services({ loggedIn }) {
   const navigate = useNavigate();
 
-  const handleBookClick = () => {
+  const handleBookClick = (serviceType) => {
     if (!loggedIn) {
       toast.warn("Please log in to book a service!");
       navigate('/login');
     } else {
-      navigate('/booking');
+      navigate('/booking', { state: { selectedService: serviceType } });
     }
   };
-
 
   return (
     <div className='px-8 py-4 space-y-8'>
@@ -113,7 +113,7 @@ function Services({ loggedIn }) {
             <h3 className='font-bold text-2xl text-center'>{item.title}</h3>
             <p className='text-center'>{item.description}</p>
             <button
-              onClick={handleBookClick}
+              onClick={() => handleBookClick(item.title)}
               className='bg-amber-300 text-black px-4 py-2 rounded hover:bg-amber-400'
             >
               Book Now
