@@ -19,8 +19,9 @@ const SignUp = () => {
         icon: "warning",
         confirmButtonText: "Try Again",
       });
+      
       return;
-    }
+}
 
       try {
         const response = await fetch("http://localhost:3000/newuser", {method: "POST",headers: { "Content-Type": "application/json" },
@@ -39,11 +40,12 @@ const SignUp = () => {
       });
     } else {
       Swal.fire({
-        title: "Sign Up Failed",
-        text: result.message || "Please try again.",
-        icon: "error",
+        title: result.error?.includes("Email") ? "Duplicate Email" : "Sign Up Failed",
+        text: result.error || result.message || "Please try again.",
+        icon: "info",
         confirmButtonText: "OK",
       });
+
     }
   } catch (err) {
     console.error("SignUp error:", err);

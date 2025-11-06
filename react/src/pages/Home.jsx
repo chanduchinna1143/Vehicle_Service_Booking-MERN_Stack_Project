@@ -1,25 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function Home({ loggedIn }) {
+function Home() {
+  const navigate = useNavigate();
+
+  const handleBookClick = () => {
+    navigate("/services"); 
+  };
+
   return (
     <div>
-      <div className='flex justify-between items-center py-10 px-30'>
-        <div className='space-y-18'>
-          <section className='space-y-6 font-bold text-7xl'>
+      <div className="flex justify-between items-center py-10 px-30">
+        <div className="space-y-18">
+          <section className="space-y-6 font-bold text-7xl">
             <h1>24/7 Car</h1>
             <h1>Mechanic Repair</h1>
             <h1>Service</h1>
           </section>
-          <section className='text-2xl text-blue-600'>
+          <section className="text-2xl text-blue-600">
             <p>Call Us : 9966655384</p>
           </section>
           <section>
-            <Link to={loggedIn ? '/booking' : '/login'}>
-              <button type='button' className='bg-black text-white text-xl px-8 py-3 rounded-4xl'>
-                Book Service
-              </button>
-            </Link>
+            <button
+              type="button"
+              onClick={handleBookClick}
+              className="bg-black text-white text-xl px-8 py-3 rounded-4xl"
+            >
+              Book Service
+            </button>
           </section>
         </div>
         <div>
@@ -27,10 +35,10 @@ function Home({ loggedIn }) {
         </div>
       </div>
 
-      <section className='space-y-6'>
-        <section className='text-center space-y-6'>
-          <h1 className='text-4xl font-bold'>How do we do it?</h1>
-          <p className='text-stone-600'>
+      <section className="space-y-6">
+        <section className="text-center space-y-6">
+          <h1 className="text-4xl font-bold">How do we do it?</h1>
+          <p className="text-stone-600">
             Experience convenience with our bike and car minor repair service! Our skilled technicians arrive equipped with the
             necessary tools and expertise to <br />swiftly address minor issues with your vehicle on the spot, ensuring your vehicle stays in
             optimal condition for your journey ahead.
@@ -38,14 +46,14 @@ function Home({ loggedIn }) {
         </section>
 
         <section>
-          <div className='flex justify-between px-50'>
+          <div className="flex justify-between px-50">
             <img src="Repair-Service-1.png" alt="click" />
             <img src="Repair-Service-2.png" alt="click" />
             <img src="Repair-Service-3.png" alt="click" />
             <img src="maintenance-tips.png" alt="click" />
             <img src="payment.png" alt="click" />
           </div>
-          <div className='flex text-center gap-8 place-content-center text-stone-600'>
+          <div className="flex text-center gap-8 place-content-center text-stone-600">
             <p>Diagnose the vehicle thoroughly<br /> to narrow down the problem</p>
             <p>Fix the problem with right<br /> solution for spot mobilisation</p>
             <p>Recheck the vehicle for any <br />other warning & issues</p>
@@ -54,13 +62,13 @@ function Home({ loggedIn }) {
           </div>
         </section>
 
-        <section className='flex justify-center px-6 py-10'>
+        <section className="flex justify-center px-6 py-10">
           <div className="grid grid-flow-col grid-rows-3 gap-x-8 gap-y-4">
             <div className="row-span-3 w-124 h-84 rounded-4xl">
-              <img src="P1.jpg" alt="click" className='w-124 h-84 rounded-4xl' />
+              <img src="P1.jpg" alt="click" className="w-124 h-84 rounded-4xl" />
             </div>
             <div className="col-span-2">
-              <h1 className='font-bold text-3xl'>Reliable On-Spot <br />Repairs with Expert Backup</h1>
+              <h1 className="font-bold text-3xl">Reliable On-Spot <br />Repairs with Expert Backup</h1>
             </div>
             <div className="col-span-2 row-span-2">
               <p>
@@ -76,10 +84,10 @@ function Home({ loggedIn }) {
           </div>
         </section>
 
-        <section className='flex justify-center px-6 py-10'>
+        <section className="flex justify-center px-6 py-10">
           <div className="grid grid-flow-col grid-rows-3 gap-x-8 gap-y-4">
             <div className="col-span-2">
-              <h1 className='font-bold text-3xl'>Post-Breakdown Vehicle<br /> Care & Service Guidelines:</h1>
+              <h1 className="font-bold text-3xl">Post-Breakdown Vehicle<br /> Care & Service Guidelines:</h1>
             </div>
             <div className="col-span-2 row-span-2">
               <p>
@@ -94,7 +102,7 @@ function Home({ loggedIn }) {
               </p>
             </div>
             <div className="row-span-3 w-124 h-84 rounded-4xl">
-              <img src="P2.jpg" alt="click" className='w-124 h-84 rounded-4xl' />
+              <img src="P2.jpg" alt="click" className="w-124 h-84 rounded-4xl" />
             </div>
           </div>
         </section>

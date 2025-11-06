@@ -7,7 +7,6 @@ const Footer = () => {
     <div className="bg-neutral-950 w-full text-white p-10">
 
         <div className="grid grid-cols-2  gap-8 mb-5">
-            {/* address and motto section */}
             <div className="flex justify-between flex-wrap">
                 <div className="mb-3">
                 <h2 className="text-3xl font-bold mb-">Honda</h2>
@@ -21,16 +20,16 @@ const Footer = () => {
         </div>
 
        
-        {/* About and other sections */}
+     
         <div className="flex  flex-wrap justify-between mb-5">
-            {/* reachus section */}
+          
             <div className="m-5">
                 <h4 className="text-base font-bold">Reach Us</h4>
                 <p>hello@readyassist.in</p>
                 <p>875392742(readyAssist)</p>
                 <p>82957937(CNGFirst)</p>
             </div>
-            {/* company */}
+        
             <div className="m-5">
                 <h4 className="text-base font-bold">Company</h4>
                 <p>About us</p>
@@ -38,7 +37,7 @@ const Footer = () => {
                 <p>contact us</p>
                 <p>News</p>
             </div>
-            {/* products */}
+ 
             <div className="m-5">
                 <h4 className="text-base font-bold">Products</h4>
                 <p>Dashcom</p>
@@ -46,7 +45,7 @@ const Footer = () => {
                 <p>mac+</p>
                 <p>claims pro</p>
             </div>
-            {/* resources */}
+
             <div className="m-5">
                 <h4 className="text-base font-bold">Resources</h4>
                 <p>Blogs</p>
@@ -54,7 +53,7 @@ const Footer = () => {
                 <p>Flood safety</p>
                 <p>CNG Market insights</p>
             </div>
-            {/* quicklinks */}
+
             <div className="m-5 text-center">
                 <h4 className="text-base font-bold">QuickLinks</h4>
                 <p>MySubcriptions</p>

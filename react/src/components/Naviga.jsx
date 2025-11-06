@@ -2,9 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Naviga = ({ loggedIn, handleLogout }) => {
   const navigate = useNavigate();
+  const userRole = localStorage.getItem("userRole"); // 'admin' or 'user'
 
   const logoutAndRedirect = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userEmail");
     handleLogout();
     navigate("/login");
   };
@@ -17,13 +20,20 @@ const Naviga = ({ loggedIn, handleLogout }) => {
 
       <div className="flex items-center gap-6 text-sm font-medium">
         <NavLink to="/" label="Home" />
-        <NavLink to="/Services" label="Services" />
+        <NavLink to="/services" label="Services" />
         <NavLink to="/zero" label="About" />
 
         {loggedIn ? (
           <>
-            <NavLink to="/booking" label="Book" />
-            <NavLink to="/userstatus" label="My Status" />
+            {userRole === "user" && (
+              <>
+                <NavLink to="/booking" label="Book" />
+                <NavLink to="/userstatus" label="My Status" />
+              </>
+            )}
+            {userRole === "admin" && (
+              <NavLink to="/toadmin" label="Dashboard" />
+            )}
             <button
               onClick={logoutAndRedirect}
               className="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-1.5 rounded-md font-semibold transition transform hover:scale-105 shadow-md border border-yellow-500"
@@ -51,6 +61,7 @@ const Naviga = ({ loggedIn, handleLogout }) => {
     </nav>
   );
 };
+
 const NavLink = ({ to, label }) => (
   <Link
     to={to}

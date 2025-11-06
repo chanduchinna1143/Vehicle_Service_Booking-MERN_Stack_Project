@@ -1,7 +1,7 @@
 {
   "name": "vehicle_backend_server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "vehicle.js",
   "scripts": {
     "start": "node vehicle.js",
     "server": "nodemon vehicle.js"
@@ -15,7 +15,8 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.19.1"
+    "mongoose": "^8.19.1",
+    "nodemailer": "^7.0.10"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
