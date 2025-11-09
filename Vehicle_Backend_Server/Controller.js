@@ -114,7 +114,6 @@ exports.createBooking = async (req, res) => {
     const serviceTax = +(base * 0.05).toFixed(2);
     const totalPrice = +(base + gst + serviceTax).toFixed(2);
 
-    // Validate required fields
     if (
       !FullName ||
       !email ||
@@ -128,7 +127,6 @@ exports.createBooking = async (req, res) => {
       return res.status(400).json({ message: "Please fill all the required fields." });
     }
 
-    // Validate and parse appointment date
     const appointment = new Date(AppointmentDate);
     if (!appointment || isNaN(appointment.getTime())) {
       return res.status(400).json({ message: "Invalid appointment date." });

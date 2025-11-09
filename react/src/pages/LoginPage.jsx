@@ -19,6 +19,7 @@ function LoginPage({ setLoggedIn }) {
         body: JSON.stringify(data),
       });
       const result = await response.json();
+
       if (response.ok) {
         toast.success("Login successful!");
         localStorage.setItem("userEmail", result.email);
@@ -30,17 +31,15 @@ function LoginPage({ setLoggedIn }) {
           navigate("/toadmin");
         } else {
           const statusRes = await fetch("http://localhost:3000/userstatus", {
-            headers: {
-              Authorization: `Bearer ${result.token}`,
-            },
+            headers: { Authorization: `Bearer ${result.token}` },
           });
           const bookings = await statusRes.json();
 
-            if (Array.isArray(bookings) && bookings.length > 0) {
-              navigate("/userstatus");
-            } else {
-              navigate("/booking");
-            }
+          if (Array.isArray(bookings) && bookings.length > 0) {
+            navigate("/userstatus");
+          } else {
+            navigate("/booking");
+          }
         }
       } else {
         toast.error(result.message || "Invalid email or password");
@@ -52,65 +51,63 @@ function LoginPage({ setLoggedIn }) {
   };
 
   return (
-    <div className="flex h-157 bg-gray-100">
-      <div className="w-2/3 relative">
-        <img
-          src="/project_car.webp"
-          alt="Car Service"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute top-10 left-10 text-white">
-          <h1 className="text-4xl font-bold">Car Maintenance Portal</h1>
-          <p className="mt-2 text-lg text-gray-200">
-            Manage your car service, repairs, and more.
+    <div
+      className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center relative"
+      style={{
+        backgroundImage:'url("https://img.freepik.com/premium-photo/auto-repair-maintenance-garage-render-3d_10221-16070.jpg")'}}>
+      <div className="absolute inset-0 bg-black/40"></div>
+
+      <div className="relative z-10 w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-8 transition-transform hover:scale-[1.02]">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-extrabold text-blue-600 drop-shadow-md">
+            Honda Service Portal
+          </h1>
+          <p className="text-gray-600 text-sm mt-2">
+            Sign in to manage your car bookings and maintenance.
           </p>
         </div>
-      </div>
 
-      <div className="w-1/3 flex flex-col justify-center items-center bg-white shadow-xl px-8 rounded-2xl h-full">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">Welcome Back</h2>
-
-        <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-gray-600 mb-1">Email</label>
+            <label className="block text-gray-700 mb-1 font-medium">Email</label>
             <input
               name="email"
               type="email"
               value={data.email}
               onChange={handleChange}
               placeholder="Enter your email"
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-600 mb-1">Password</label>
+            <label className="block text-gray-700 mb-1 font-medium">Password</label>
             <input
               name="password"
               type="password"
               value={data.password}
               onChange={handleChange}
               placeholder="Enter your password"
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-md hover:shadow-lg"
           >
             Login
           </button>
-
-          <p className="text-center text-gray-600 mt-4">
-            Don’t have an account?{" "}
-            <Link to="/SignUp" className="text-blue-600 hover:underline">
-              Sign up
-            </Link>
-          </p>
         </form>
+
+        <p className="text-center text-gray-700 text-sm mt-6">
+          Don’t have an account?{" "}
+          <Link to="/SignUp" className="text-blue-600 font-medium hover:underline">
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );

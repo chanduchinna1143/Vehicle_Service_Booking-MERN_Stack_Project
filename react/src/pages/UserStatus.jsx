@@ -20,7 +20,10 @@ const UserStatusPage = () => {
         const result = await response.json();
 
         if (response.ok) {
-          setBookings(result);
+          const sortedBookings = result.sort((a, b) =>
+            b._id.localeCompare(a._id)
+          );
+          setBookings(sortedBookings);
         } else {
           setError(result.message || "Failed to fetch bookings");
         }
@@ -75,7 +78,7 @@ const UserStatusPage = () => {
 
       <div className="relative z-10 max-w-6xl mx-auto">
         <h2 className="text-5xl font-extrabold text-center text-blue-700 mb-10">
-          🚗 Your Booking Status
+           Your Booking Status
         </h2>
 
         {error && (
@@ -121,4 +124,4 @@ const UserStatusPage = () => {
   );
 };
 
-export default UserStatusPage;  
+export default UserStatusPage;
