@@ -12,12 +12,10 @@ import Zero from "./pages/About";
 import UserStatusPage from "./pages/UserStatus";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CarIntro from "./pages/Carintro";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -34,9 +32,6 @@ function App() {
 
   return (
     <div>
-      {showIntro ? (
-        <CarIntro onComplete={() => setShowIntro(false)} />
-      ) : (
         <BrowserRouter>
           <Naviga loggedIn={loggedIn} isAdmin={isAdmin} handleLogout={handleLogout} />
           <Routes>
@@ -52,7 +47,6 @@ function App() {
           <Footer />
           <ToastContainer position="top-right" autoClose={2000} theme="colored" />
         </BrowserRouter>
-      )}
     </div>
   );
 }
